@@ -60,6 +60,7 @@ try {
 };
 return(
   <div className="flex justify-center items-center h-screen">
+    {statusMessage}
     <form
       onSubmit={handleSubmit}
       className="bg-white p-20 rounded-lg shadow-lg w-96 "
