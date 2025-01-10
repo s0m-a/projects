@@ -4,11 +4,13 @@ import { useState,  } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
+
 const AddImage = ()=>{
 const [image, setImage] = useState(null)
 const [imagePreview, setImagePreview] = useState <string | null> (null)
 const [statusMessage, setStatusMessage] = useState <string | null> (null);
 const router = useRouter();
+const authToken = process.env.IMGUR_AUTH_TOKEN;
 
 const handleChange = (e:React.ChangeEvent<HTMLInputElement>) =>{
 const files:any = e.target.files?.[0];
@@ -29,19 +31,26 @@ try {
   const response = await fetch("https://api.imgur.com/3/image", {
     method: "POST",
     headers: {
-      Authorization:`Bearer 6f787353391fa307bc18ddaa0f399f10996ef289`,
+      Authorization:`Bearer ${authToken}`,
     },
     body: formData,
   });
+    // Read the response as text
+    const text = await response.text(); 
+    console.log("Response Text:", text); // Log the raw response
 
-  const data = await response.json();
-
-  if (data.success) {
-    setStatusMessage("Image uploaded successfully!");
-    alert("image uplaoded")
-   router.back();
-    setImagePreview('');
-  } else {
+    // Check if the response is okay (status in the range 200-299)
+    if (response.ok) {
+      const data = JSON.parse(text); // Parse it as JSON only if successful
+      if (data.success) {
+        setStatusMessage("Image uploaded successfully!");
+        alert("Image uploaded");
+        router.back();
+        setImagePreview('');
+      } else {
+        setStatusMessage("Upload failed. Please try again.");
+      }
+    } else {
     setStatusMessage("Upload failed. Please try again.");
   }
 } catch (error) {

@@ -7,17 +7,17 @@ const DisplayImages = () => {
   const [images, setImages] = useState<ImgurImage[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const authToken = process.env.IMGUR_AUTH_TOKEN;
 
   // Fetch images from Imgur
   const fetchImages = async () => {
     setLoading(true);
     setError(null);
-
     try {
       const response = await fetch("https://api.imgur.com/3/account/me/images", {
         method: "GET",
         headers: {
-          Authorization: `Bearer 6f787353391fa307bc18ddaa0f399f10996ef289`,
+          Authorization: `Bearer ${authToken}`,
         },
       });
 
@@ -30,6 +30,8 @@ const DisplayImages = () => {
         setError("Failed to fetch images.");
       }
     } catch (err) {
+      {console.log("Using token:", authToken);
+      }
       console.error("Error fetching images:", err);
       setError("An error occurred while fetching images.");
     } finally {
