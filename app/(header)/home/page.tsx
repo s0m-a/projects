@@ -57,7 +57,7 @@ const UserImages = () => {
                         </div>
                     ))
                 ) : (
-                    <p>No images found.</p>
+                    <p>No images found. please refresh page</p>
                 )}
             </div>
         </div>
