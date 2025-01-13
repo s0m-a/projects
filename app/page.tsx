@@ -15,7 +15,7 @@ const LoginPage: React.FC = () => {
     try {
       const data = await loginUser(username, password);
   
-      localStorage.setItem('token', data.token)
+      
       localStorage.setItem('userid', data.userId);
     
       router.push('./home');

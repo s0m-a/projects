@@ -7,7 +7,7 @@ import authenticateJWT  from './middleware/authMiddleware.js'
 import  cors from 'cors';
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 app.use(express.json());
 app.use(cors());
@@ -31,10 +31,18 @@ app.post('/api/auth/register',async (req, res)=>{
 app.post('/api/auth/login',async (req, res)=>{
     const { username, password} = req.body;
     try {
-        console.log('Received request body:', req.body);
         const response = await AuthController.logIn({username, password});
         if(response.status === "success"){
-            res.status(201).json(response);
+            res.cookie('refreshToken', response.token.refreshtoken, 
+                { httpOnly: true, secure: process.env.NODE_ENV === 'production', 
+                    maxAge: 7 * 24 * 60 * 60 * 1000 }); 
+                       // Create a response object including accessToken and message
+                       const responseData = {
+                        accessToken: response.token.accesstoken,
+                        message: response.message, // Include the welcome message
+                        userId: response.userId // Optionally include the user ID if needed
+                    };
+            res.status(201).json(responseData);
         }else{
             const message = response.message;
             res.status(400).json(response);
@@ -80,6 +88,22 @@ app.get('/api/image/retrieve',authenticateJWT,async (req, res)=>{
         res.status(500).json({status: 'false', message: 'server error'});
     }
 } )
+
+
+app.post('/refresh-token', (req, res) => {
+    const { refreshToken } = req.cookies; // Get refresh token from cookie
+    if (!refreshToken) return res.sendStatus(401); // Unauthorized
+
+    jwt.verify(refreshToken, AuthController.REFRESH_SECRET_KEY, (err, decoded) => {
+        if (err) {
+            console.error('Invalid refresh token', err);
+            return res.sendStatus(403); // Forbidden
+        }
+        // Generate a new access token
+        const accessToken = AuthController.generateTokens(decoded.id).accessToken;
+        res.json({ accessToken });
+    });
+});
 
 app.listen(PORT, async ()=>{
     const isAlive = await  dbStorage.checklife();

@@ -1,21 +1,25 @@
 'use client'
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const UserImages = () => {
     const [images, setImages] = useState<any[]>([]);
     const [error, setError] = useState<string | null>(null);
-
+    
+    const URL = 'https://projects-a5kn.onrender.com';
+    const router = useRouter();
     useEffect(() => {
+        
         const fetchUserImages = async () => {
             const userId = localStorage.getItem('userid'); // Ensure this is stored when the user logs in
             if (!userId) {
-                setError('User ID not found in local storage');
-                return;
+                setError('User not found');
+                router.push('/');
             }
 
             try {
               const userToken = localStorage.getItem('token');
-              const response = await fetch(`https://projects-a5kn.onrender.com/api/image/retrieve`, {
+              const response = await fetch(`${URL}/api/image/retrieve`, {
                 method: 'GET', // Use 'GET' for retrieving data
                 headers: {
                     'Content-Type': 'application/json', // Specify the content type

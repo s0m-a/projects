@@ -4,11 +4,16 @@ import jwt, { decode } from 'jsonwebtoken'
 
 
 
+
 class AuthController{
     static SECRET_KEY = process.env.SECRET_KEY || 'your_secret_key';
     static EXPIRATION = process.env.EXPIRATION || '1h'
+    static REFRESH_SECRET_KEY = process.env.REFRESH_SECRET_KEY || 'your_refresh_secret_key';
+    static REFRESH_EXPIRATION = process.env.REFRESH_EXPIRATION || '7d'
     static generateToken(userId) {
-        return jwt.sign({ id: userId }, this.SECRET_KEY, { expiresIn: this.EXPIRATION });
+        const refreshtoken = jwt.sign({id:userId}, this.REFRESH_SECRET_KEY, {expiresIn: this.REFRESH_EXPIRATION})
+        const accesstoken = jwt.sign({ id: userId }, this.SECRET_KEY, { expiresIn: this.EXPIRATION });
+        return {accesstoken, refreshtoken}
     }
     
     
@@ -82,24 +87,6 @@ class AuthController{
     }
     
 
-    
-    // static async verifyToken(data)
-    // {
-    //     const{token} = data;
-    //     if(!token)
-    //     {
-    //         return ({status: 'error', message:`no token was provided`});
-    //     }
-    //    //verifying token
-    //    try {
-    //     const decoded = jwt.verify(token, this.SECRET_KEY);
-    //     return ({status: 'success', message:`token is valid`, decoded});
-    //    } catch (err) {
-    //     return ({status: 'error', message:`Unauthorized: ${err.message}`});
-    //    }
-     
-    // }
-    
 
 }
 

@@ -9,7 +9,6 @@ dotenv.config();
 // const DB_PWD = process.env.DB_PWD ;
 const DATABASE_URL = process.env.DB_DATABASE_URL;
 
-console.log("DATABASE_URL:", DATABASE_URL); // Log to check if it's loaded correctly
 
 
  class Dbstorage{
@@ -23,7 +22,7 @@ console.log("DATABASE_URL:", DATABASE_URL); // Log to check if it's loaded corre
                     require: true,
                     rejectUnauthorized: false, // Allow self-signed certificates
                 },
-            },
+           },
         });
     }
 

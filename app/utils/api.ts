@@ -1,4 +1,5 @@
-const API_URL = 'https://projects-a5kn.onrender.com/api/';
+const API_URL = 'http://localhost:5001/api/';
+//const API_URL = 'https://projects-a5kn.onrender.com/api/';
 import { LoginResponse, UploadImageData, UploadImageResponse, RegisterUser, RegisterUserResponse } from "./interface";
 
 
@@ -23,6 +24,7 @@ if(!response.ok){
     console.error('login failed', respondData);
     throw new Error(respondData?.message || 'failed to log in')
 }
+localStorage.setItem('token', respondData.accessToken); // Store the token
 return respondData;
 }
 
