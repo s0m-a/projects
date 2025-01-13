@@ -94,21 +94,23 @@ if (!imageUrl) {
 }
 };
 return(
-  <div className="flex justify-center items-center h-screen">
+  <div className="flex justify-center items-center h-screen w-full">
     {statusMessage}
     <form
       onSubmit={handleSubmit}
-      className="bg-white p-20 rounded-lg shadow-lg w-96 "
+      className="bg-white p-20 rounded-lg shadow-lg w-96  "
     >
       <input type='text' 
       value={title} 
       onChange={(e)=> {setTitle(e.target.value)}}
-      placeholder='image title' />
+      placeholder='image title' 
+      className='w-full p-6 bg-violet-50 outline-none rounded' />
 
       <input type='text'
       value={desc}
       onChange={(e)=>{setDesc(e.target.value)}} 
-      placeholder='image discription'/>
+      placeholder='image discription'
+      className='w-full p-6 bg-violet-50 mt-6 outline-none rounded'/>
 
       <input
         type="file"
@@ -118,12 +120,12 @@ return(
         className="block w-full text-sm text-gray-500 file:mr-4 
                    file:py-2 file:px-4 file:rounded-lg file:border file:border-gray-300 
                    file:text-sm file:font-medium hover:file:bg-gray-100
-                   hover:file:text-gray-700 file:cursor-pointer mb-4"
+                   hover:file:text-gray-700 file:cursor-pointer mb-4 mt-8"
       />
       <button
         type="submit"
         className="w-full bg-violet-300 text-white py-2 rounded-lg 
-                   hover:bg-violet-400 transition-colors duration-300"
+                   hover:bg-violet-400 transition-colors duration-300 mt-4"
       >
         Upload
       </button>
