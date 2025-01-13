@@ -15,7 +15,7 @@ const UserImages = () => {
 
             try {
               const userToken = localStorage.getItem('token');
-              const response = await fetch(`http://localhost:5001/api/image/retrieve`, {
+              const response = await fetch(`https://projects-a5kn.onrender.com/api/image/retrieve`, {
                 method: 'GET', // Use 'GET' for retrieving data
                 headers: {
                     'Content-Type': 'application/json', // Specify the content type
