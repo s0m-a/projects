@@ -7,7 +7,7 @@ import authenticateJWT  from './middleware/authMiddleware.js'
 import  cors from 'cors';
 
 const app = express();
-const PORT = process.env.S_PORT || 5001;
+const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(cors());
