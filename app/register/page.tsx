@@ -56,7 +56,7 @@ const RegisterPage: React.FC = () => {
                        required
                        className='block p-8 w-full mt-4 bg-violet-50 rounded-lg outline-none shadow text-gray-500'
                        />
-
+             {error && <p className='text-center text-red-400 mt-2'>{error}</p>}
             <button type="submit"
             className='block w-full bg-violet-300 p-5 mt-6 mb-6 text-white font-bold text-md rounded-lg hover:bg-violet-400 shadow'
             >sign up</button>
