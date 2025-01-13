@@ -4,7 +4,6 @@ import { LoginResponse, UploadImageData, UploadImageResponse, RegisterUser, Regi
 
 
 export const loginUser = async (username:string, password:string): Promise<LoginResponse> =>{
-    console.log('Request Body:', { username, password });
     const response = await fetch (`${API_URL}auth/login`,{
         method: 'POST',
         headers: {
