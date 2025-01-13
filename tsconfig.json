@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "backend/server.js", "backend/models/assoModel.js", "backend/models/imageModel.js", "backend/models/userModel.js", "backend/lib/db.js"],
   "exclude": ["node_modules"]
 }
